@@ -5,6 +5,7 @@ class GamesController < ApplicationController
   # GET /games.json
   def index
     @games = Game.all
+    @game_new = Game.new
   end
 
   # GET /games/1
@@ -24,11 +25,12 @@ class GamesController < ApplicationController
   # POST /games
   # POST /games.json
   def create
-    @game = Game.new(game_params)
+    @game = Game.new
+    @game.user_id = current_user.id
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to @game, notice: 'Game was successfully created.' }
+        format.html { redirect_to :root, notice: 'Game was successfully created.' }
         format.json { render :show, status: :created, location: @game }
       else
         format.html { render :new }
@@ -67,8 +69,5 @@ class GamesController < ApplicationController
       @game = Game.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def game_params
-      params.require(:game).permit(:user_id, :enemy_id, :accepted, :userboard, :enemyboard)
-    end
+
 end
