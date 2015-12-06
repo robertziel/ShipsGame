@@ -27,7 +27,11 @@
         <td><%= game.accepted %></td>
         <td><%= game.userboard %></td>
         <td><%= game.enemyboard %></td>
-        <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if game != current_user.game %>
+          <td><%= link_to 'Join', game, method: :put %></td>
+        <% else %>
+          <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

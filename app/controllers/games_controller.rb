@@ -42,9 +42,10 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1
   # PATCH/PUT /games/1.json
   def update
+    @game.enemy_id = current_user.id
     respond_to do |format|
-      if @game.update(game_params)
-        format.html { redirect_to @game, notice: 'Game was successfully updated.' }
+      if @game.save
+        format.html { redirect_to :root, notice: 'Game was successfully updated.' }
         format.json { render :show, status: :ok, location: @game }
       else
         format.html { render :edit }
