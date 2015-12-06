@@ -1,4 +1,4 @@
-<div class="content" ng-app="Game">
+<div ng-app="Game">
   <%= @game.user.email %>
   <%= @game.enemy.email %>
   <button class="btn"><%= link_to 'Quit game', @game, method: :delete, data: { confirm: 'Are you sure? You will loose your points!' } %></button>
@@ -8,15 +8,17 @@
 
 
 
-  <div class="list-group" ng-controller="GameController as game">
-    <h1 class="text-center">You</h1>
-    <table class="gameBoard">
-      <tr ng-repeat="x in game.userboard">
-        <td class="field" ng-repeat="y in x track by $index">
-          {{y}}
-        </td>
-      </tr>
-    </table>
+  <div class="list-group row" ng-controller="GameController as game">
+    <div class="col-lg-6 col-sm-12">
+      <h1 class="text-center">You</h1>
+      <table class="gameBoard">
+        <tr ng-repeat="x in game.userboard">
+          <td class="field" ng-repeat="y in x track by $index">
+            {{y}}
+          </td>
+        </tr>
+      </table>
+    </div>
 
     <%= render "games/ships" %>
 

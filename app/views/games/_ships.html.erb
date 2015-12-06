@@ -1,13 +1,17 @@
-<div class="dragable" id="ichiShip"></div>
-<div class="dragable" id="ichiShip">></div>
-<div class="dragable" id="ichiShip">></div>
-<div class="dragable" id="ichiShip">></div>
+<div class="shipsToChoose col-lg-6 col-sm-12">
+  <h2>Move ships to the right place on the board</h2>
 
-<div class="dragable" id="niShip">></div>
-<div class="dragable" id="niShip"></div>
-<div class="dragable" id="niShip"></div>
+  <div id="dragable" class="ichiShip" ng-class="{rotated:game.Ship[1] === 1}"><div class="rotate" ng-click="game.shipRotate(1)"></div></div>
+  <div id="dragable" class="ichiShip" ng-class="{rotated:game.Ship[2] === 1}"><div class="rotate" ng-click="game.shipRotate(2)"></div></div>
+  <div id="dragable" class="ichiShip" ng-class="{rotated:game.Ship[3] === 1}"><div class="rotate" ng-click="game.shipRotate(3)"></div></div>
+  <div id="dragable" class="ichiShip" ng-class="{rotated:game.Ship[4] === 1}"><div class="rotate" ng-click="game.shipRotate(4)"></div></div>
 
-<div class="dragable" id="sanShip"></div>
-<div class="dragable" id="sanShip"></div>
+  <div id="dragable" class="niShip" ng-class="{rotated:game.Ship[5] === 1}"><div class="rotate" ng-click="game.shipRotate(5)"></div></div>
+  <div id="dragable" class="niShip" ng-class="{rotated:game.Ship[6] === 1}"><div class="rotate" ng-click="game.shipRotate(6)"></div></div>
+  <div id="dragable" class="niShip" ng-class="{rotated:game.Ship[7] === 1}"><div class="rotate" ng-click="game.shipRotate(7)"></div></div>
 
-<div class="dragable" id="yonShip"></div>
+  <div id="dragable" class="sanShip" ng-class="{rotated:game.Ship[8] === 1}"><div class="rotate" ng-click="game.shipRotate(8)"></div></div>
+  <div id="dragable" class="sanShip" ng-class="{rotated:game.Ship[9] === 1}"><div class="rotate" ng-click="game.shipRotate(9)"></div></div>
+
+  <div id="dragable" class="yonShip" ng-class="{rotated:game.Ship[10] === 1}"><div class="rotate" ng-click="game.shipRotate(10)"></div></div>
+</div>

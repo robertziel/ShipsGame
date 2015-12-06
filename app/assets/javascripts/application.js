@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require angular
-//= require turbolinks
 //= require bootstrap-sprockets
 //= require mouse_dragger
 //= require_tree .

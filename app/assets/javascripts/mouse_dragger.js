@@ -24,7 +24,7 @@ function OnMouseDown(e)
     // IE uses srcElement, others use target
     var target = e.target != null ? e.target : e.srcElement;
 
-    _debug = target.className == 'dragable'
+    _debug = target.id == 'dragable'
         ? 'draggable element clicked'
         : 'NON-draggable element clicked';
 
@@ -32,7 +32,7 @@ function OnMouseDown(e)
     // for Firefox, left click == 0
     if ((e.button == 1 && window.event != null ||
         e.button == 0) &&
-        target.className == 'dragable')
+        target.id == 'dragable')
     {
         // grab the mouse position
         _startX = e.clientX;

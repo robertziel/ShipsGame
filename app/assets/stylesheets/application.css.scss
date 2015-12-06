@@ -24,27 +24,53 @@
   border: solid 1px black;
 }
 
-.dragable {
+#dragable {
   position: relative;
   background-color: black;
+  color: white;
 }
 
-#ichiShip {
+#dragable:hover {
+  border: solid 2px #FF002D;
+}
+
+.rotate {
+  border: solid 2px black;
+  background-color: grey;
+  position: absolute;
+  top: -30px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  display: none;
+}
+
+.rotated {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+  transform: rotate(90deg);
+}
+
+#dragable:hover .rotate {
+  display: block;
+}
+
+.ichiShip {
   width: 50px;
   height:50px;
 }
 
-#niShip {
+.niShip {
   width: 100px;
   height:50px;
 }
 
-#sanShip {
+.sanShip {
   width: 150px;
   height:50px;
 }
 
-#yonShip {
+.yonShip {
   width: 200px;
   height:50px;
 }
