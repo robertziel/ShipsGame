@@ -1,9 +1,9 @@
 <div class="col-lg-6 col-sm-12">
   <h1 class="text-center">You</h1>
   <table class="gameBoard">
-    <tr ng-repeat="x in game.fields">
+    <tr ng-repeat="x in game.userboard">
       <td class="field" ng-repeat="y in x track by $index">
-        {{y[0]}} {{y[1]}}
+        {{y}}
       </td>
     </tr>
   </table>

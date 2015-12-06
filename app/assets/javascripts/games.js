@@ -19,17 +19,36 @@
 
 
     this.fields = arr;
-
     this.checkPosition = function(){
+
       var elementsFields = angular.element( document.querySelector('.gameBoard' )).children().children().children();
       for (var x = 0; x < 10; x++){
         for (var y = 0; y < 10; y++){
           var offsetHash = offset(angular.element(elementsFields[(y * 10) + x]));
-          this.fields[x][y][0] = offsetHash.left;
-          this.fields[x][y][1] = offsetHash.top;
+          this.fields[y][x][0] = offsetHash.left;
+          this.fields[y][x][1] = offsetHash.top;
         }
       }
+
+      for (var x = 0; x < 10; x++){
+        for (var y = 0; y < 10; y++){
+          var fieldX = this.fields[x][y][0];
+          var fieldY = this.fields[x][y][1];
+          for (var z = 0; z < 11; z++){
+            var shipX = this.position[z][0];
+            var shipY = this.position[z][1];
+            if (fieldY + 25 >= shipY && fieldY - 25 < shipY) {
+              if (fieldX + 25 >= shipX && fieldX - 25 < shipX) {
+                this.userboard[x][y] = 1;
+              }
+            }
+          }
+        }
+      }
+
+
     };
+
 
   });
 
