@@ -11,7 +11,8 @@
   <div class="list-group row" ng-controller="GameController as game">
 
     <%= render "games/userBoard" %>
-    <%= render "games/ships" %>
+    <div ng-show="game.tab === 1"><%= render "games/ships" %></div>
+    <div ng-show="game.tab === 2"><h1>Oczekiwanie na drugiego gracza (ułożenie statków zapisane w bazie danych, AJAX sprawdzający zmiany w bazie, cdn....)</div>
 
   </div>
 

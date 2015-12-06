@@ -3,14 +3,16 @@
 
   app.controller('GameController', function(){
 
+    this.tab = 1;
+
     this.userboard = userData;
 
     this.Ship = [0,0,0,0,0,0,0,0,0,0];
     this.shipRotate = function(num){
-      if (this.Ship[num] === 0) {this.Ship[num] = 1;} else {this.Ship[num] = 0;}
+      if (this.Ship[num] === 0) {this.Ship[num] = 1; this.position[num][2] = 1;} else {this.Ship[num] = 0; this.position[num][2] = 0;}
     };
 
-    this.position = [[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0],[0,0]];
+    this.position = [[0,0,0,0],[0,0,0,1],[0,0,0,1],[0,0,0,1],[0,0,0,1],[0,0,0,2],[0,0,0,2],[0,0,0,2],[0,0,0,3],[0,0,0,3],[0,0,0,4]];
     this.changePosition = function(num){
       var offsetHash = offset(angular.element( document.querySelector( '.Ship' + num ) ));
       this.position[num][0] = offsetHash.left;
@@ -30,6 +32,8 @@
         }
       }
 
+      //FILL UP
+
       for (var x = 0; x < 10; x++){
         for (var y = 0; y < 10; y++){
           var fieldX = this.fields[x][y][0];
@@ -37,15 +41,43 @@
           for (var z = 0; z < 11; z++){
             var shipX = this.position[z][0];
             var shipY = this.position[z][1];
+            var shipType = this.position[z][3];
             if (fieldY + 25 >= shipY && fieldY - 25 < shipY) {
               if (fieldX + 25 >= shipX && fieldX - 25 < shipX) {
-                this.userboard[x][y] = 1;
+
+                if (this.position[z][2] === 1) {
+                  for (var con = x; con <= x + (shipType - 1); con++){
+                    if (this.userboard[con][y] === 0) {
+                      this.userboard[con][y] = 1;
+                    }
+                  }
+                }
+                else {
+                  for (var con = y; con <= y + (shipType - 1); con++){
+                    if (this.userboard[x][con] === 0) {
+                      this.userboard[x][con] = 1;
+                    }
+                  }
+                }
               }
             }
           }
         }
       }
 
+      //CHECK AMOUNT 20
+      var amount = 0;
+      for (var x = 0; x < 10; x++) {
+        for (var y = 0; y < 10; y++) amount = amount + this.userboard[x][y];
+      }
+      if (amount < 20) {
+        for (var x = 0; x < 10; x++) {
+          for (var y = 0; y < 10; y++) this.userboard[x][y] = 0;
+        }
+      }
+      else {
+        this.tab = 2;
+      }
 
     };
 
