@@ -1,10 +1,13 @@
+<div class="container">
 
-<h1>New Game</h1>
-<%= render 'form' %>
+
+<% if hasGame %>
+  <%= render 'form' %>
+<% end %>
 
 <h1>Listing Games</h1>
 
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>User</th>
@@ -19,13 +22,11 @@
   <tbody>
     <% @games.each do |game| %>
       <tr>
-        <td><%= game.user_id %></td>
+        <td><%= game.user.email %></td>
         <td><%= game.enemy_id %></td>
         <td><%= game.accepted %></td>
         <td><%= game.userboard %></td>
         <td><%= game.enemyboard %></td>
-        <td><%= link_to 'Show', game %></td>
-        <td><%= link_to 'Edit', edit_game_path(game) %></td>
         <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -34,4 +35,6 @@
 
 <br>
 
-<%= link_to 'New Game', new_game_path %>
+
+
+</div>
