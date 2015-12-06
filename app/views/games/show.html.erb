@@ -9,17 +9,8 @@
 
 
   <div class="list-group row" ng-controller="GameController as game">
-    <div class="col-lg-6 col-sm-12">
-      <h1 class="text-center">You</h1>
-      <table class="gameBoard">
-        <tr ng-repeat="x in game.userboard">
-          <td class="field" ng-repeat="y in x track by $index">
-            {{y}}
-          </td>
-        </tr>
-      </table>
-    </div>
 
+    <%= render "games/userBoard" %>
     <%= render "games/ships" %>
 
   </div>
