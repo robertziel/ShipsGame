@@ -2,7 +2,7 @@
   <h1 class="text-center">You</h1>
   <table class="gameBoard">
     <tr ng-repeat="x in game.userboard">
-      <td class="field" ng-repeat="y in x track by $index">
+      <td class="field" ng-class="{field1:y===1}" ng-repeat="y in x track by $index">
         {{y}}
       </td>
     </tr>

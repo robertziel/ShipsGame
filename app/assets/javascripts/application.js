@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require angular
 //= require bootstrap-sprockets
+//= require interact
 //= require mouse_dragger
 //= require_tree .

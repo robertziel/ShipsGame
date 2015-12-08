@@ -1,4 +1,4 @@
-<div ng-app="Game">
+<div ng-app="Game" class="container">
   <%= @game.user.email %>
   <%= @game.enemy.email %>
   <button class="btn"><%= link_to 'Quit game', @game, method: :delete, data: { confirm: 'Are you sure? You will loose your points!' } %></button>
@@ -15,6 +15,7 @@
     <div ng-show="game.tab === 2"><h1>Oczekiwanie na drugiego gracza (ułożenie statków zapisane w bazie danych, AJAX sprawdzający zmiany w bazie, cdn....)</div>
 
   </div>
+
 
 
 </div>

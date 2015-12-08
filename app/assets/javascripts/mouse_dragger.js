@@ -1,110 +1,37 @@
+// target elements with the "draggable" class
+interact('#dragable')
+  .draggable({
+    // enable inertial throwing
+    inertia: true,
+    // keep the element within the area of it's parent
+    restrict: {
+      endOnly: true,
+      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+    },
+    // enable autoScroll
+    autoScroll: true,
 
-var _startX = 0;            // mouse starting positions
-var _startY = 0;
-var _offsetX = 0;           // current element offset
-var _offsetY = 0;
-var _dragElement;           // needs to be passed from OnMouseDown to OnMouseMove
-var _oldZIndex = 0;         // we temporarily increase the z-index during drag
-var _debug = $('debug');    // makes life easier
+    // call this function on every dragmove event
+    onmove: dragMoveListener
+  });
 
-InitDragDrop();
 
-function InitDragDrop()
-{
-    document.onmousedown = OnMouseDown;
-    document.onmouseup = OnMouseUp;
-}
+  function dragMoveListener (event) {
+    var target = event.target,
+        // keep the dragged position in the data-x/data-y attributes
+        x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+        y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
-function OnMouseDown(e)
-{
-    // IE is retarded and doesn't pass the event object
-    if (e == null)
-        e = window.event;
+    // translate the element
+    target.style.left =
+      x + 'px';
+    target.style.top =
+      y + 'px';
 
-    // IE uses srcElement, others use target
-    var target = e.target != null ? e.target : e.srcElement;
+    // update the posiion attributes
+    target.setAttribute('data-x', x);
+    target.setAttribute('data-y', y);
+  }
 
-    _debug = target.id == 'dragable'
-        ? 'draggable element clicked'
-        : 'NON-draggable element clicked';
-
-    // for IE, left click == 1
-    // for Firefox, left click == 0
-    if ((e.button == 1 && window.event != null ||
-        e.button == 0) &&
-        target.id == 'dragable')
-    {
-        // grab the mouse position
-        _startX = e.clientX;
-        _startY = e.clientY;
-
-        // grab the clicked element's position
-        _offsetX = ExtractNumber(target.style.left);
-        _offsetY = ExtractNumber(target.style.top);
-
-        // bring the clicked element to the front while it is being dragged
-        _oldZIndex = target.style.zIndex;
-        target.style.zIndex = 10000;
-
-        // we need to access the element in OnMouseMove
-        _dragElement = target;
-
-        // tell our code to start moving the element with the mouse
-        document.onmousemove = OnMouseMove;
-
-        // cancel out any text selections
-        document.body.focus();
-
-        // prevent text selection in IE
-        document.onselectstart = function () { return false; };
-        // prevent IE from trying to drag an image
-        target.ondragstart = function() { return false; };
-
-        // prevent text selection (except IE)
-        return false;
-    }
-}
-
-function OnMouseMove(e)
-{
-    if (e == null)
-        var e = window.event;
-
-    // this is the actual "drag code"
-    _dragElement.style.left = (_offsetX + e.clientX - _startX) + 'px';
-    _dragElement.style.top = (_offsetY + e.clientY - _startY) + 'px';
-
-    _debug.innerHTML = '(' + _dragElement.style.left + ', ' +
-        _dragElement.style.top + ')';
-}
-
-function OnMouseUp(e)
-{
-    if (_dragElement != null)
-    {
-        _dragElement.style.zIndex = _oldZIndex;
-
-        // we're done with these events until the next OnMouseDown
-        document.onmousemove = null;
-        document.onselectstart = null;
-        _dragElement.ondragstart = null;
-
-        // this is how we know we're not dragging
-        _dragElement = null;
-
-        _debug.innerHTML = 'mouse up';
-    }
-}
-
-function ExtractNumber(value)
-{
-    var n = parseInt(value);
-
-    return n == null || isNaN(n) ? 0 : n;
-}
-
-// this is simply a shortcut for the eyes and fingers
-function $(id)
-{
-    return document.getElementById(id);
-}
+  // this is used later in the resizing and gesture demos
+  window.dragMoveListener = dragMoveListener;

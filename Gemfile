@@ -35,6 +35,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 gem 'angularjs-rails'
 
+gem 'interact-rails'
+
 gem 'bootstrap-sass'
 
 gem 'devise'
