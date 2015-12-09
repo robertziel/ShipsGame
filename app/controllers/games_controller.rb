@@ -21,6 +21,7 @@ class GamesController < ApplicationController
       if @game.user_id != current_user.id
         @game.userboard,@game.enemyboard = @game.enemyboard,@game.userboard
         @game.readyuser,@game.readyenemy = @game.readyenemy,@game.readyuser
+        @game.turn == true ? @game.turn = false : @game.turn = true
       end
       respond_to do |format|
         format.html
@@ -81,8 +82,10 @@ class GamesController < ApplicationController
         if params[:shot]
           if @game.user_id != current_user.id
             @game.userboard = toBoard(params[:shot].split(",").map(&:to_i))
+            @game.turn = true
           else
             @game.enemyboard = toBoard(params[:shot].split(",").map(&:to_i))
+            @game.turn = false
           end
           @game.save
         end
@@ -90,6 +93,7 @@ class GamesController < ApplicationController
         if @game.user_id != current_user.id
           @game.userboard,@game.enemyboard = @game.enemyboard,@game.userboard
           @game.readyuser,@game.readyenemy = @game.readyenemy,@game.readyuser
+          @game.turn == true ? @game.turn = false : @game.turn = true
         end
 
 

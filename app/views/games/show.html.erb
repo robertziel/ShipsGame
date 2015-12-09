@@ -10,6 +10,8 @@
 
   <div class="list-group row" ng-controller="GameController as game">
 
+    <h2 ng-show="turn">Your turn!</h2>
+    <h2 ng-hide="turn">Your enemy turn!</h2>
     <%= render "games/userBoard" %>
     <div ng-show="readyuser === false"><%= render "games/ships" %></div>
     <div ng-show="readyenemy === false && readyuser === true"><h1>Waiting for Enemy</div>

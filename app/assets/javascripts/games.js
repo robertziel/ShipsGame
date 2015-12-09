@@ -12,7 +12,7 @@
           $scope.enemyboard = response.data.enemyboard;
           $scope.readyuser = response.data.readyuser;
           $scope.readyenemy = response.data.readyenemy;
-
+          $scope.turn = response.data.turn;
 
       });
     };
@@ -24,6 +24,7 @@
         $scope.enemyboard = response.data.enemyboard;
         $scope.readyuser = response.data.readyuser;
         $scope.readyenemy = response.data.readyenemy;
+        $scope.turn = response.data.turn;
 
       });
     };
@@ -35,6 +36,7 @@
         $scope.enemyboard = response.data.enemyboard;
         $scope.readyuser = response.data.readyuser;
         $scope.readyenemy = response.data.readyenemy;
+        $scope.turn = response.data.turn;
 
       });
     };
@@ -52,11 +54,16 @@
 
     this.tab = ($scope.readyuser) ? 2 : 1;
 
-    this.fieldShot = function(x, y){
-      var shot = $scope.enemyboard[x][y];
-      shot === 1 ? shot = 2 : shot = 3;
-      $scope.enemyboard[x][y] = shot;
-      updateUserBoardShot($scope.enemyboard);
+    this.fieldShot = function(y, x){
+      if ($scope.turn == true) {
+        var shot = $scope.enemyboard[x][y];
+        if (shot !== 2 && shot !== 3) {
+          shot === 1 || shot === 2 ? shot = 2 : shot = 3;
+          $scope.enemyboard[x][y] = shot;
+          $scope.turn = false
+          updateUserBoardShot($scope.enemyboard);
+        }
+      }
     }
 
     this.Ship = [0,0,0,0,0,0,0,0,0,0];
