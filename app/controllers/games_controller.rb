@@ -23,6 +23,10 @@ class GamesController < ApplicationController
       @game.userboard = @game_im.enemyboard
       @game.readyuser = @game_im.readyenemy
     end
+    respond_to do |format|
+      format.html
+      format.json { render json: @game }
+    end
   end
 
   # GET /games/new
@@ -86,7 +90,7 @@ class GamesController < ApplicationController
     end
     respond_to do |format|
       format.html { redirect_to :root, notice: 'Game was successfully updated.' }
-      format.json { render :show, status: :ok, location: @game }
+      format.json { render json: @game }
     end
   end
 

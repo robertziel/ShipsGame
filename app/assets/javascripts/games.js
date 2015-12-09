@@ -7,8 +7,9 @@
     var updateUserBoard = function(push) {
         if (Object.prototype.toString.call( push ) === '[object Array]') { push = '&push=' + push ;} else { push = "";}
         $http.get(document.URL + '.json?game=1' + push).then(function(response) {
-        $scope.userboard = response.data.userboard;
-        $scope.readyuser = response.data.readyuser;
+          $scope.userboard = response.data.userboard;
+          $scope.readyuser = response.data.readyuser;
+
 
       });
     };
@@ -106,7 +107,7 @@
       }
       else {
         updateUserBoardPut($scope.userboard);
-        this.tab = 2;
+        $scope.readyuser = true;
       }
 
     };
