@@ -27,6 +27,17 @@
 
       });
     };
+    var updateUserBoardShot = function(shot) {
+        if (Object.prototype.toString.call( shot ) === '[object Array]') { shot = '&shot=' + shot ;} else { shot = "";}
+        $http.put(document.URL + '.json?game=1' + shot).then(function(response) {
+        if (response.data == false) { window.location = window.location.origin; }
+        $scope.userboard = response.data.userboard;
+        $scope.enemyboard = response.data.enemyboard;
+        $scope.readyuser = response.data.readyuser;
+        $scope.readyenemy = response.data.readyenemy;
+
+      });
+    };
 
     //LOOP
     var loopFunction = function() {
@@ -41,7 +52,12 @@
 
     this.tab = ($scope.readyuser) ? 2 : 1;
 
-
+    this.fieldShot = function(x, y){
+      var shot = $scope.enemyboard[x][y];
+      shot === 1 ? shot = 2 : shot = 3;
+      $scope.enemyboard[x][y] = shot;
+      updateUserBoardShot($scope.enemyboard);
+    }
 
     this.Ship = [0,0,0,0,0,0,0,0,0,0];
     this.shipRotate = function(num){

@@ -66,7 +66,7 @@ class GamesController < ApplicationController
         if @game != ifBelongstoActiveGame(current_user.id) or @game == nil
           redirect_to :root
         end
-        #push
+        #--------PUSH--------
         if params[:push]
           if @game.user_id == current_user.id
             @game.userboard = toBoard(params[:push].split(",").map(&:to_i))
@@ -74,6 +74,15 @@ class GamesController < ApplicationController
           else
             @game.enemyboard = toBoard(params[:push].split(",").map(&:to_i))
             @game.readyenemy = true
+          end
+          @game.save
+        end
+        #--------SHOT--------
+        if params[:shot]
+          if @game.user_id != current_user.id
+            @game.userboard = toBoard(params[:shot].split(",").map(&:to_i))
+          else
+            @game.enemyboard = toBoard(params[:shot].split(",").map(&:to_i))
           end
           @game.save
         end
