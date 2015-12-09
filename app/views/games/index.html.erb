@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-app="Lobby">
 
 
 <% if hasGame %>
@@ -7,24 +7,23 @@
 
 <h1>Listing Games</h1>
 
-<table class="table table-hover">
+<table class="table table-hover" ng-controller="LobbyController as games">
   <thead>
     <tr>
       <th>User</th>
-      <th>Accepted</th>
-      <th>Userboard</th>
-      <th>Enemyboard</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
+    <tr ng-repeat"game in games">
+      <td>{{game.user.email}}</td>
+        <td></td>
+        <td></td>
+    </tr>
     <% @games.each do |game| %>
       <tr>
         <td><%= game.user.email %></td>
-        <td><%= game.accepted %></td>
-        <td><%= game.userboard %></td>
-        <td><%= game.enemyboard %></td>
         <% if game != current_user.game %>
           <td><%= link_to 'Join', game, method: :put %></td>
         <% else %>

@@ -16,4 +16,5 @@
 //= require bootstrap-sprockets
 //= require interact
 //= require mouse_dragger
+//= require lobby
 //= require_tree .

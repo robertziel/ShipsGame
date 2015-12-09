@@ -1,7 +1,7 @@
 (function() {
   var app = angular.module('Game', []);
 
-  app.controller('GameController', function($http, $scope){
+  app.controller('GameController', ['$http','$scope',function($http, $scope){
 
 
     var updateUserBoard = function(push) {
@@ -143,7 +143,7 @@
     };
 
 
-  });
+  }]);
 
 })();
 
