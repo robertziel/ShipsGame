@@ -1,11 +1,40 @@
 (function() {
   var app = angular.module('Game', []);
 
-  app.controller('GameController', function(){
+  app.controller('GameController', function($http, $scope){
 
-    this.tab = 1;
 
-    this.userboard = userData;
+    var updateUserBoard = function(push) {
+        if (Object.prototype.toString.call( push ) === '[object Array]') { push = '&push=' + push ;} else { push = "";}
+        $http.get(document.URL + '.json?game=1' + push).then(function(response) {
+        $scope.userboard = response.data.userboard;
+        $scope.readyuser = response.data.readyuser;
+
+      });
+    };
+    var updateUserBoardPut = function(push) {
+        if (Object.prototype.toString.call( push ) === '[object Array]') { push = '&push=' + push ;} else { push = "";}
+        $http.put(document.URL + '.json?game=1' + push).then(function(response) {
+        $scope.userboard = response.data.userboard;
+        $scope.readyuser = response.data.readyuser;
+
+      });
+    };
+
+    //LOOP
+    var loopFunction = function() {
+      updateUserBoard("");
+      var timer = setInterval(function() {
+        updateUserBoard("");
+      }, 5000);
+    }
+
+    loopFunction();
+    //LOOP
+
+    this.tab = ($scope.readyuser) ? 2 : 1;
+
+
 
     this.Ship = [0,0,0,0,0,0,0,0,0,0];
     this.shipRotate = function(num){
@@ -47,15 +76,15 @@
 
                 if (this.position[z][2] === 1) {
                   for (var con = x; con <= x + (shipType - 1); con++){
-                    if (this.userboard[con][y] === 0) {
-                      this.userboard[con][y] = 1;
+                    if ($scope.userboard[con][y] === 0) {
+                      $scope.userboard[con][y] = 1;
                     }
                   }
                 }
                 else {
                   for (var con = y; con <= y + (shipType - 1); con++){
-                    if (this.userboard[x][con] === 0) {
-                      this.userboard[x][con] = 1;
+                    if ($scope.userboard[x][con] === 0) {
+                      $scope.userboard[x][con] = 1;
                     }
                   }
                 }
@@ -68,14 +97,15 @@
       //CHECK AMOUNT 20
       var amount = 0;
       for (var x = 0; x < 10; x++) {
-        for (var y = 0; y < 10; y++) amount = amount + this.userboard[x][y];
+        for (var y = 0; y < 10; y++) amount = amount + $scope.userboard[x][y];
       }
       if (amount < 20) {
         for (var x = 0; x < 10; x++) {
-          for (var y = 0; y < 10; y++) this.userboard[x][y] = 0;
+          for (var y = 0; y < 10; y++) $scope.userboard[x][y] = 0;
         }
       }
       else {
+        updateUserBoardPut($scope.userboard);
         this.tab = 2;
       }
 
@@ -97,8 +127,6 @@ for(var x = 0; x < 10; x++){
     }
 }
 //initialize 3D array
-
-var userData = [[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0]];
 
 
 

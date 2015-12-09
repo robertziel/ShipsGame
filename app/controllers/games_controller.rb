@@ -18,6 +18,11 @@ class GamesController < ApplicationController
     if @game != ifBelongstoActiveGame(current_user.id) or @game == nil
       redirect_to :root
     end
+    if @game.user_id != current_user.id
+      @game_im = @game
+      @game.userboard = @game_im.enemyboard
+      @game.readyuser = @game_im.readyenemy
+    end
   end
 
   # GET /games/new
@@ -50,16 +55,38 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1.json
   def update
     @game = Game.where(id: params[:id]).take
-    @game.enemy_id = current_user.id
-    @game.accepted = true
-    respond_to do |format|
-      if @game.save
-        format.html { redirect_to :root, notice: 'Game was successfully updated.' }
-        format.json { render :show, status: :ok, location: @game }
-      else
-        format.html { render :edit }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
+    if params[:game] == "1"
+      if @game != ifBelongstoActiveGame(current_user.id) or @game == nil
+        redirect_to :root
       end
+      #push
+      if params[:push]
+        if @game.user_id == current_user.id
+          @game.userboard = toBoard(params[:push].split(",").map(&:to_i))
+          @game.readyuser = true
+        else
+          @game.enemyboard = toBoard(params[:push].split(",").map(&:to_i))
+          @game.readyenemy = true
+        end
+        @game.save
+      end
+      #replace
+      if @game.user_id != current_user.id
+        game_im = @game
+        @game.userboard = game_im.enemyboard
+        @game.readyuser = game_im.readyenemy
+      end
+
+
+    else
+      #game joining
+      @game.enemy_id = current_user.id
+      @game.accepted = true
+      @game.save
+    end
+    respond_to do |format|
+      format.html { redirect_to :root, notice: 'Game was successfully updated.' }
+      format.json { render :show, status: :ok, location: @game }
     end
   end
 
