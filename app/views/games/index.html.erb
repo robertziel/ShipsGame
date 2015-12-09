@@ -26,6 +26,8 @@
         <td><%= game.user.email %></td>
         <% if game != current_user.game %>
           <td><%= link_to 'Join', game, method: :put %></td>
+        <% elsif game.accepted == true %>
+          <td>During game</td>
         <% else %>
           <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>

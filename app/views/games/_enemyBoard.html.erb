@@ -2,7 +2,7 @@
   <h1 class="text-center">Enemy</h1>
   <table class="gameBoard">
     <tr ng-repeat="(xIndex, x) in enemyboard">
-      <td class="field" ng-class="{'field1' : y===1, 'field2' : y===2, 'field3' : y===3}" ng-click="game.fieldShot($index, xIndex)" ng-repeat="y in x track by $index">{{y}}</td>
+      <td class="field" ng-class="{'field2' : y===2, 'field3' : y===3}" ng-click="game.fieldShot($index, xIndex)" ng-repeat="y in x track by $index">{{y}}</td>
     </tr>
   </table>
 </div>
