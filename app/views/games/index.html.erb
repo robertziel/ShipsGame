@@ -24,10 +24,10 @@
     <% @games.each do |game| %>
       <tr>
         <td><%= game.user.email %></td>
-        <% if game != current_user.game %>
-          <td><%= link_to 'Join', game, method: :put %></td>
-        <% elsif game.accepted == true %>
+        <% if game.accepted == true %>
           <td>During game</td>
+        <% elsif game != current_user.game %>
+          <td><%= link_to 'Join', game, method: :put %></td>
         <% else %>
           <td><%= link_to 'Destroy', game, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
