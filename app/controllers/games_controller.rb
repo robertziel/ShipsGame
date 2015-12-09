@@ -17,15 +17,16 @@ class GamesController < ApplicationController
     @game = Game.where(id: params[:id]).take
     if @game != ifBelongstoActiveGame(current_user.id) or @game == nil
       redirect_to :root
-    end
-    if @game.user_id != current_user.id
-      @game_im = @game
-      @game.userboard = @game_im.enemyboard
-      @game.readyuser = @game_im.readyenemy
-    end
-    respond_to do |format|
-      format.html
-      format.json { render json: @game }
+    else
+      if @game.user_id != current_user.id
+        @game_im = @game
+        @game.userboard = @game_im.enemyboard
+        @game.readyuser = @game_im.readyenemy
+      end
+      respond_to do |format|
+        format.html
+        format.json { render json: @game }
+      end
     end
   end
 
@@ -59,38 +60,42 @@ class GamesController < ApplicationController
   # PATCH/PUT /games/1.json
   def update
     @game = Game.where(id: params[:id]).take
-    if params[:game] == "1"
-      if @game != ifBelongstoActiveGame(current_user.id) or @game == nil
-        redirect_to :root
-      end
-      #push
-      if params[:push]
-        if @game.user_id == current_user.id
-          @game.userboard = toBoard(params[:push].split(",").map(&:to_i))
-          @game.readyuser = true
-        else
-          @game.enemyboard = toBoard(params[:push].split(",").map(&:to_i))
-          @game.readyenemy = true
+    if @game == nil
+      @game == false
+    else
+      if params[:game] == "1"
+        if @game != ifBelongstoActiveGame(current_user.id) or @game == nil
+          redirect_to :root
         end
+        #push
+        if params[:push]
+          if @game.user_id == current_user.id
+            @game.userboard = toBoard(params[:push].split(",").map(&:to_i))
+            @game.readyuser = true
+          else
+            @game.enemyboard = toBoard(params[:push].split(",").map(&:to_i))
+            @game.readyenemy = true
+          end
+          @game.save
+        end
+        #replace
+        if @game.user_id != current_user.id
+          game_im = @game
+          @game.userboard = game_im.enemyboard
+          @game.readyuser = game_im.readyenemy
+        end
+
+
+      else
+        #game joining
+        @game.enemy_id = current_user.id
+        @game.accepted = true
         @game.save
       end
-      #replace
-      if @game.user_id != current_user.id
-        game_im = @game
-        @game.userboard = game_im.enemyboard
-        @game.readyuser = game_im.readyenemy
+      respond_to do |format|
+        format.html { redirect_to :root, notice: 'Game was successfully updated.' }
+        format.json { render json: @game }
       end
-
-
-    else
-      #game joining
-      @game.enemy_id = current_user.id
-      @game.accepted = true
-      @game.save
-    end
-    respond_to do |format|
-      format.html { redirect_to :root, notice: 'Game was successfully updated.' }
-      format.json { render json: @game }
     end
   end
 

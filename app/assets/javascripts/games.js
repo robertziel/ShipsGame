@@ -7,6 +7,7 @@
     var updateUserBoard = function(push) {
         if (Object.prototype.toString.call( push ) === '[object Array]') { push = '&push=' + push ;} else { push = "";}
         $http.get(document.URL + '.json?game=1' + push).then(function(response) {
+          if (typeof response.data == "string") { window.location = window.location.origin; }
           $scope.userboard = response.data.userboard;
           $scope.readyuser = response.data.readyuser;
 
@@ -16,6 +17,7 @@
     var updateUserBoardPut = function(push) {
         if (Object.prototype.toString.call( push ) === '[object Array]') { push = '&push=' + push ;} else { push = "";}
         $http.put(document.URL + '.json?game=1' + push).then(function(response) {
+        if (response.data == false) { window.location = window.location.origin; }
         $scope.userboard = response.data.userboard;
         $scope.readyuser = response.data.readyuser;
 
