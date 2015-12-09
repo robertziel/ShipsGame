@@ -12,7 +12,8 @@
 
     <%= render "games/userBoard" %>
     <div ng-show="readyuser === false"><%= render "games/ships" %></div>
-    <div ng-show="readyuser === true"><h1>Oczekiwanie na drugiego gracza (ułożenie statków zapisane w bazie danych, AJAX sprawdzający zmiany w bazie, cdn....)</div>
+    <div ng-show="readyenemy === false && readyuser === true"><h1>Waiting for Enemy</div>
+    <div ng-show="readyenemy === true && readyuser === true"><%= render "games/enemyBoard" %></div>
 
   </div>
 

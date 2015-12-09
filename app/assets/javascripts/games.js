@@ -9,7 +9,9 @@
         $http.get(document.URL + '.json?game=1' + push).then(function(response) {
           if (typeof response.data == "string") { window.location = window.location.origin; }
           $scope.userboard = response.data.userboard;
+          $scope.enemyboard = response.data.enemyboard;
           $scope.readyuser = response.data.readyuser;
+          $scope.readyenemy = response.data.readyenemy;
 
 
       });
@@ -19,7 +21,9 @@
         $http.put(document.URL + '.json?game=1' + push).then(function(response) {
         if (response.data == false) { window.location = window.location.origin; }
         $scope.userboard = response.data.userboard;
+        $scope.enemyboard = response.data.enemyboard;
         $scope.readyuser = response.data.readyuser;
+        $scope.readyenemy = response.data.readyenemy;
 
       });
     };

@@ -19,9 +19,8 @@ class GamesController < ApplicationController
       redirect_to :root
     else
       if @game.user_id != current_user.id
-        @game_im = @game
-        @game.userboard = @game_im.enemyboard
-        @game.readyuser = @game_im.readyenemy
+        @game.userboard,@game.enemyboard = @game.enemyboard,@game.userboard
+        @game.readyuser,@game.readyenemy = @game.readyenemy,@game.readyuser
       end
       respond_to do |format|
         format.html
@@ -80,9 +79,8 @@ class GamesController < ApplicationController
         end
         #replace
         if @game.user_id != current_user.id
-          game_im = @game
-          @game.userboard = game_im.enemyboard
-          @game.readyuser = game_im.readyenemy
+          @game.userboard,@game.enemyboard = @game.enemyboard,@game.userboard
+          @game.readyuser,@game.readyenemy = @game.readyenemy,@game.readyuser
         end
 
 
