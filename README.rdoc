@@ -1,5 +1,9 @@
 == README
 
 App is being created
+====================
+
+Test version avaliable on https://guarded-savannah-8504.herokuapp.com
+!Important. Lobby still needs to be refreshed manually to see changes.
 
 <tt>rake doc:app</tt>.
